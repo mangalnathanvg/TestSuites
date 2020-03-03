@@ -68,7 +68,7 @@ For the workshop, we will perform two tasks: 1) prioritization tests cases by pr
 
 ### Test prioritization
 
-Print a ranked list of the test cases based on test to execute and test faiilure.
+Print a ranked list of the test cases based on time to execute and test faiilure.
 
 ### Flaky tests
 
