@@ -2,7 +2,35 @@
 
 # Test Suites
 
-## Setup
+## Before you start
+
+```
+$ bakerx --version
+bakerx@0.6.9
+virtcrud@09a885c
+```
+
+Download an image with node.js/Java installed. If you do not have the Jenkins image locally, we can use jenkins image from Github Releases.
+
+```
+$ bakerx pull CSC-DevOps/Images#Spring2020 jenkins
+```
+
+Create virtual environment for workshop with a sync folder.
+
+```bash
+$ bakerx run testsuite jenkins --ip 192.168.44.60 --memory 2048 --sync
+```
+
+Inside your virtual environment (`bakerx ssh testsuite`), install maven.
+
+```bash
+$ apt-get update
+$ sudo apt install maven
+$ mvn -version
+```
+
+## Testing setup
 
 Inside the simplecalc directory, run `mvn test`. You should see test results. You can inspect the resulting files produced by the surefire plugin, in target/superfire-reports.
 
