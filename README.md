@@ -25,10 +25,23 @@ $ bakerx run testsuite jenkins --ip 192.168.44.60 --memory 2048 --sync
 Inside your virtual environment (`bakerx ssh testsuite`), install maven.
 
 ```bash
-$ apt-get update
-$ sudo apt install maven
-$ mvn -version
+$ sudo apt-get update
+$ sudo apt install maven -y
+$ mvn --version
 ```
+
+### Hack to enable symlinks inside VM:
+
+Inside a terminal, run:
+```
+$ VBoxManage setextradata "testsuite" VBoxInternal2/SharedFoldersEnableSymlinksCreate/vbox-share-0 1
+# Stop VM
+$ VBoxManage controlvm testsuite poweroff soft
+# Start up again.
+$ bakerx run testsuite jenkins --ip 192.168.44.60 --memory 2048 --sync
+```
+
+Another [workaround](https://stackoverflow.com/c/ncsu/a/1023/1) to consider.
 
 ## Testing setup
 
