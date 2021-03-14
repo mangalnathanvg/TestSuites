@@ -43,6 +43,21 @@ You should see the printout of the test suite file:
   status: 'passed' }
 ```
 
+### Inspecting the Maven Test Report
+
+```xml
+  <testcase classname="com.github.stokito.unitTestExample.calculator.CalculatorTest" name="testSum" time="0.015"/>
+  <testcase classname="com.github.stokito.unitTestExample.calculator.CalculatorTest" name="testFlaky" time="7.347"/>
+  <testcase classname="com.github.stokito.unitTestExample.calculator.CalculatorTest" name="testMinus" time="0.016">
+    <failure message="expected:&lt;0&gt; but was:&lt;4&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;0&gt; but was:&lt;4&gt;
+	at junit.framework.Assert.fail(Assert.java:57)
+	at junit.framework.Assert.failNotEquals(Assert.java:329)
+	at junit.framework.Assert.assertEquals(Assert.java:78)
+	at junit.framework.Assert.assertEquals(Assert.java:234)
+	at junit.framework.Assert.assertEquals(Assert.java:241)
+	at com.github.stokito.unitTestExample.calculator.CalculatorTest.testMinus(CalculatorTest.java:45)
+```
+
 ## Tasks
 
 For the workshop, we will perform two tasks: 1) prioritization tests cases by print out in sorted order, and 2) automatically find the flaky test.
