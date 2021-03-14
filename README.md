@@ -14,14 +14,14 @@ docable-server import https://github.com/CSC-DevOps/TestSuites
 
 Ensure you have the jenkins image already pulled locally. We will use this image to take advantage of Java + Maven. If it is missing, you can run:
 
-```
-$ bakerx pull jenkins CSC-DevOps/Images#Spring2021 
+```bash | {type:'command'}
+bakerx pull jenkins CSC-DevOps/Images#Spring2021 
 ```
 
 Create virtual environment for workshop with a sync folder.
 
-```bash
-$ bakerx run
+```bash | {type:'command', stream: true, failed_when: 'exitCode!=0'}
+bakerx run
 ```
 
 ## Testing your setup
