@@ -1,0 +1,8 @@
+name: testsuites
+image: jenkins
+ip: 192.168.44.60 
+memory: 2048
+sync: true
+up: |
+   sudo apt-get update
+   sudo apt install maven -y

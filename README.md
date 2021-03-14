@@ -2,50 +2,31 @@
 
 # Test Suites
 
-## Before you start
+## Setup
+
+### Before you get started
+
+Import this as a notebook or clone this repo locally. Also, ensure you [install latest version of docable](https://github.com/ottomatica/docable-notebooks/blob/master/docs/install.md)!
+
+```bash
+docable-server import https://github.com/CSC-DevOps/TestSuites
+```
+
+Ensure you have the jenkins image already pulled locally. We will use this image to take advantage of Java + Maven. If it is missing, you can run:
 
 ```
-$ bakerx --version
-bakerx@0.6.9
-virtcrud@09a885c
-```
-
-Download an image with node.js/Java installed. If you do not have the Jenkins image locally, we can use jenkins image from Github Releases.
-
-```
-$ bakerx pull CSC-DevOps/Images#Spring2020 jenkins
+$ bakerx pull jenkins CSC-DevOps/Images#Spring2021 
 ```
 
 Create virtual environment for workshop with a sync folder.
 
 ```bash
-$ bakerx run testsuite jenkins --ip 192.168.44.60 --memory 2048 --sync
+$ bakerx run
 ```
 
-Inside your virtual environment (`bakerx ssh testsuite`), install maven.
+## Testing your setup
 
-```bash
-$ sudo apt-get update
-$ sudo apt install maven -y
-$ mvn --version
-```
-
-### Hack to enable symlinks inside VM:
-
-Inside a terminal, run:
-```
-$ VBoxManage setextradata "testsuite" VBoxInternal2/SharedFoldersEnableSymlinksCreate/vbox-share-0 1
-# Stop VM
-$ VBoxManage controlvm testsuite poweroff soft
-# Start up again.
-$ bakerx run testsuite jenkins --ip 192.168.44.60 --memory 2048 --sync
-```
-
-Another [workaround](https://stackoverflow.com/c/ncsu/a/1023/1) to consider.
-
-## Testing setup
-
-Inside the simplecalc directory, run `mvn test`. You should see test results. You can inspect the resulting files produced by the surefire plugin, in target/superfire-reports.
+Inside the `simplecalc` directory, run `mvn test`. You should see test results. You can inspect the resulting files produced by the surefire plugin, in target/superfire-reports.
 
 Stepping one directory back up from the simplecalc directory, run `npm install`, then `node main.js`.
 
