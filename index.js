@@ -1,6 +1,7 @@
 
 let driver =  require('./lib/driver');
 const fs = require('fs');
+const path = require('path');
 const chalk = require('chalk');
 
 let args = process.argv.slice(2);
@@ -10,7 +11,7 @@ if( args.length != 2 )
     return;
 }
 const cmd = args[0];
-const testsuite = args[1];
+const testsuite = path.join(process.cwd(), args[1]);
 
 ( async () => {
 
