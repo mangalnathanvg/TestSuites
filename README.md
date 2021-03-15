@@ -12,7 +12,7 @@ Import this as a notebook or clone this repo locally. Also, ensure you [install 
 docable-server import https://github.com/CSC-DevOps/TestSuites
 ```
 
-Ensure you have the jenkins image already pulled locally. We will use this image to take advantage of Java + Maven. If it is missing, you can run:
+Ensure you have the jenkins image already pulled locally. We will use this image to take advantage of Java install. If it is missing, you can run:
 
 ```bash | {type:'command'}
 bakerx pull jenkins CSC-DevOps/Images#Spring2021 
@@ -24,7 +24,7 @@ Create virtual environment for workshop with a sync folder.
 bakerx run
 ```
 
-## Testing your setup
+## Testing your setup and code tour
 
 Inside the `simplecalc` directory, run `mvn test`. You should see test results. You can inspect the resulting files produced by the surefire plugin, in target/superfire-reports.
 
@@ -32,7 +32,7 @@ Stepping one directory back up from the simplecalc directory, run `npm install`,
 
 You should see the printout of the test suite file:
 
-```
+```json
 { name: 'testSum', time: '0.004', status: 'passed' }
 { name: 'testSlow', time: '0.007', status: 'passed' }
 { name: 'testFlaky', time: '10.715', status: 'passed' }
@@ -43,7 +43,29 @@ You should see the printout of the test suite file:
   status: 'passed' }
 ```
 
-### Inspecting the Maven Test Report
+``` | {type: 'terminal'}
+```
+
+#### Inspecting the Test Suite
+
+```java
+public class CalculatorTest {
+
+	@Test
+	public void testSum() {
+		// Given
+		Calculator calculator = new Calculator();
+		// When
+		int result = calculator.sum(2, 2);
+		// Then
+		if (result != 4) {   // if 2 + 2 != 4
+			Assert.fail();
+		}
+	}
+    ...
+```
+
+#### Inspecting the Maven Test Report
 
 ```xml
   <testcase classname="com.github.stokito.unitTestExample.calculator.CalculatorTest" name="testSum" time="0.015"/>
@@ -57,6 +79,10 @@ You should see the printout of the test suite file:
 	at junit.framework.Assert.assertEquals(Assert.java:241)
 	at com.github.stokito.unitTestExample.calculator.CalculatorTest.testMinus(CalculatorTest.java:45)
 ```
+
+#### Inspecting the Driver Code
+
+
 
 ## Tasks
 
