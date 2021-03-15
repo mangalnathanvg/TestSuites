@@ -12,13 +12,7 @@ Import this as a notebook or clone this repo locally. Also, ensure you [install 
 docable-server import https://github.com/CSC-DevOps/TestSuites
 ```
 
-Ensure you have the jenkins image already pulled locally. We will use this image to take advantage of Java install. If it is missing, you can run:
-
-```bash | {type:'command'}
-bakerx pull jenkins CSC-DevOps/Images#Spring2021 
-```
-
-Create virtual environment for workshop with a sync folder.
+Create virtual environment for workshop, using the provided bakerx.yml.
 
 ```bash | {type:'command', stream: true, failed_when: 'exitCode!=0'}
 bakerx run
@@ -86,12 +80,70 @@ public class CalculatorTest {
 
 ## Tasks
 
-For the workshop, we will perform two tasks: 1) prioritization tests cases by print out in sorted order, and 2) automatically find the flaky test.
+For the workshop, we will perform two tasks: 
 
-### Test prioritization
+1. **Simple test case analysis:** Extend the code (`lib/driver.js`) to support the analysis of the test suite. Using status and execution time of tests, sort, and print out list of most effective tests: (ones that fail, followed those that run the fastest). When this data is collected historically, it can be useful for pruning or prioritizing unit tests in a test suite.
 
-Print a ranked list of the test cases based on time to execute and test faiilure.
+``` | {type: 'terminal'}
+```
 
-### Flaky tests
+2. **Flaky test detection:** One of the tests is flaky. See if you can write code that will help automatically detect it.
+But before that, let's make sure we know how to calculate flaky tests...
 
-One of the tests is flaky. Extend the code to run `mvn test` several times (10--20), and each run, collection statistics about failing and passing tests. See if you can calculate a "flakyness" score for each test case.
+### Calculating the flaky score?
+
+Examine the following results of 4 repeated runs of a test suite with 4 tests.
+
+| Run # | test A (P) | test B (F)  | test C (P) | test D (F) |
+| ----- | -----    | -----   | ------ | ------ | 
+| 1     | passed   | failed  | passed | passed |
+| 2     | passed   | failed  | passed | failed |
+| 3     | passed   | failed  | failed | failed |
+| 4     | passed   | failed  | failed | failed |
+
+1. What is the flakyness score for test A?
+
+```js|{type:'quiz', quiz_type:'singlechoice', quiz_answers:'2'}
+- [ ] 100%
+- [ ] 50%
+- [ ] 0%
+```
+
+2. What is the failure rate for test B?
+
+```js|{type:'quiz', quiz_type:'singlechoice', quiz_answers:'0'}
+- [ ] 100%
+- [ ] 50%
+- [ ] 0%
+```
+
+3. What is the flakyness score for test C?
+
+```js|{type:'quiz', quiz_type:'singlechoice', quiz_answers:'1'}
+- [ ] 100%
+- [ ] 50%
+- [ ] 0%
+```
+
+4. What is the flakyness score for test D?
+
+```js|{type:'quiz', quiz_type:'singlechoice', quiz_answers:'2'}
+- [ ] 75%
+- [ ] 50%
+- [ ] 25%
+```
+
+5. Which of the following would be the correct formula for calculating flakyness of a test case?
+
+```js|{type:'quiz', quiz_type:'singlechoice', quiz_answers:'1'}
+- [ ] `failing / (passing + failing)`
+- [ ] `min(passing,failing) / (passing + failing)`
+- [ ] `max(passing,failing) / (passing)`
+```
+
+### Implementing Flaky Tests Analysis
+
+Extend the code to run `mvn test` several times (10--20), and each run, collect statistics about failing and passing tests. Based on the rate of failing and passing tests, calculate a "flakyness" score for each test case, using the correct formula from above. Print the test and score.
+
+``` | {type: 'terminal'}
+```
