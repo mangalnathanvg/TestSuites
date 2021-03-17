@@ -1,4 +1,6 @@
-# Test Suites
+# Test Suites Analysis
+
+In this workshop, we cover the basics for analyzing test suites for effectiveness and quality.
 
 ## Setup
 
