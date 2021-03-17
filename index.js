@@ -21,7 +21,7 @@ const testsuite = path.join(process.cwd(), args[1]);
     }
     else if( cmd == 'flaky' ) {
 
-        await driver.calculateFlakyTests(testsuite);
+        await driver.calculateFlakyTests(testsuite, 10);
     }
     else {
         console.log( chalk.red("Usage: <priority|flaky> <testsuite_dir>"))

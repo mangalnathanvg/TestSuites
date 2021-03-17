@@ -10,35 +10,20 @@ Import this as a notebook or clone this repo locally. Also, ensure you [install 
 docable-server import https://github.com/CSC-DevOps/TestSuites
 ```
 
-Create virtual environment for workshop, using the provided bakerx.yml.
+If your local environment does not have Java + node.js, you will want to create 
+a virtual environment for workshop, using the provided bakerx.yml.
 
 ```bash | {type:'command', stream: true, failed_when: 'exitCode!=0'}
 bakerx run
 ```
 
-## Testing your setup and code tour
+## Code tour
 
-Inside the `simplecalc` directory, run `mvn test`. You should see test results. You can inspect the resulting files produced by the surefire plugin, in target/superfire-reports.
-
-Stepping one directory back up from the simplecalc directory, run `npm install`, then `node main.js`.
-
-You should see the printout of the test suite file:
-
-```json
-{ name: 'testSum', time: '0.004', status: 'passed' }
-{ name: 'testSlow', time: '0.007', status: 'passed' }
-{ name: 'testFlaky', time: '10.715', status: 'passed' }
-{ name: 'testMinus', time: '0.005', status: 'failed' }
-{ name: 'testDivide', time: '0', status: 'passed' }
-{ name: 'testDivideWillThrowExceptionWhenDivideOnZero',
-  time: '0.001',
-  status: 'passed' }
-```
-
-``` | {type: 'terminal'}
-```
+> Note: You can ssh into the virtual machine using `bakerx ssh testsuites`. Workshop materials will be mounted in `/bakerx`.
 
 #### Inspecting the Test Suite
+
+Inside the `simplecalc/src/test` directory (package namespace elided) you will see a CalculatorTest.java file, containing a few test cases. While nothing fancy, this will be enough to perform a simple analysis for the workshop.
 
 ```java
 public class CalculatorTest {
@@ -59,6 +44,8 @@ public class CalculatorTest {
 
 #### Inspecting the Maven Test Report
 
+Run `mvn test`. You should see maven download dependencies and print out the test results. You can inspect the resulting files produced by the surefire plugin, in `target/superfire-reports/`, which includes a xml file containing the following:
+
 ```xml
   <testcase classname="com.github.stokito.unitTestExample.calculator.CalculatorTest" name="testSum" time="0.015"/>
   <testcase classname="com.github.stokito.unitTestExample.calculator.CalculatorTest" name="testFlaky" time="7.347"/>
@@ -73,6 +60,45 @@ public class CalculatorTest {
 ```
 
 #### Inspecting the Driver Code
+
+For the workshop, we will be running `mvn test` and then parsing the xml file to retrieve the test results. Luckily, we have code that already helps do this initial step, providing a simple JSON representation of the test results.
+
+```js
+let mvn = child.exec('mvn test', {cwd: testsuite_dir});
+mvn.stdout.pipe( process.stdout );
+mvn.stderr.pipe( process.stderr );
+
+mvn.once('exit', async (exitCode) => 
+{
+	let testReport = getTestReport(testsuite_dir);
+	let tests = await getTestResults(testReport);
+	tests.forEach( e => console.log(e));
+});
+```
+
+``` | {type: 'terminal'}
+```
+
+Stepping one directory back up from the simplecalc directory, and run `npm install` in the top-level directory. Then run:
+
+```bash
+node index.js priority simplecalc
+```
+
+You should see the printout of the `mvn test` results:
+
+```json
+{ name: 'testSum', time: '0.004', status: 'passed' }
+{ name: 'testSlow', time: '0.007', status: 'passed' }
+{ name: 'testFlaky', time: '10.715', status: 'passed' }
+{ name: 'testMinus', time: '0.005', status: 'failed' }
+{ name: 'testDivide', time: '0', status: 'passed' }
+{ name: 'testDivideWillThrowExceptionWhenDivideOnZero',
+  time: '0.001',
+  status: 'passed' }
+```
+
+
 
 
 
