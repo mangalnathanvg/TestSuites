@@ -2,6 +2,10 @@
 
 In this workshop, we cover the basics for analyzing test suites for effectiveness and quality.
 
+``` | {type:'youtube'}
+https://www.youtube.com/embed/_TzqrHn5Q78
+```
+
 ## Setup
 
 ### Before you get started
